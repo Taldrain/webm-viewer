@@ -1,4 +1,4 @@
-import { load } from "https://deno.land/std/dotenv/mod.ts";
+import { load } from "https://deno.land/std@0.183.0/dotenv/mod.ts";
 
 const env = await load();
 const WEBM_DIR_PATH = env.WEBM_PATH;
