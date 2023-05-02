@@ -1,17 +1,16 @@
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
+import Player from "../components/Player.tsx";
 
-export default function ViewerIsland() {
-  const ref = useRef<HTMLVideoElement>(null);
+export default function ViewerIsland({ publicPath }: { publicPath: string }) {
+  const [src, setSrc] = useState("");
 
   const getRandomId = async () => {
-    const response = await fetch("/id");
+    const response = await fetch(`${publicPath}/id`);
     return response.text();
   };
 
   const loadRandomWebm = async () => {
-    if (ref.current) {
-      ref.current.src = `/${await getRandomId()}`;
-    }
+    setSrc(await getRandomId());
   };
 
   useEffect(() => {
@@ -21,19 +20,12 @@ export default function ViewerIsland() {
   return (
     <>
       <div class="flex items-center justify-center h-screen select-none">
-        <video
-          controls
-          ref={ref}
-          autoPlay
-          onEnded={loadRandomWebm}
-          class="max-h-screen"
-        >
-        </video>
+        <Player src={src} onEnded={loadRandomWebm} publicPath={publicPath} />
       </div>
       <button
         type="button"
         onClick={loadRandomWebm}
-        class="absolute right-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+        class="absolute right-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
