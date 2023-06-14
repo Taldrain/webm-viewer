@@ -25,7 +25,7 @@ export default function ViewerIsland({ publicPath }: { publicPath: string }) {
       <button
         type="button"
         onClick={loadRandomWebm}
-        class="absolute right-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
+        class="absolute left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
