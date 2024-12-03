@@ -1,7 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import { getExtension, isValidWebm } from "../utils/path.ts";
 
-import { loadWebm } from "../utils/webm.ts";
+import { getExtension, isValidWebm } from "~/utils/path.ts";
+import { loadWebm } from "~/utils/webm.ts";
 
 function getContentType(extension: string) {
   if (extension === "webm") {

@@ -1,6 +1,6 @@
 import { Handlers } from "$fresh/server.ts";
 
-import { getRandomWebm, loadWebm } from "../utils/webm.ts";
+import { getRandomWebm, loadWebm } from "~/utils/webm.ts";
 
 export const handler: Handlers = {
   async GET() {

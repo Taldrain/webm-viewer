@@ -1,5 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
-import Player from "../components/Player.tsx";
+import Player from "~/components/Player.tsx";
 
 export default function ViewerIsland({ publicPath }: { publicPath: string }) {
   const [src, setSrc] = useState("");
@@ -19,13 +19,13 @@ export default function ViewerIsland({ publicPath }: { publicPath: string }) {
 
   return (
     <>
-      <div class="flex items-center justify-center h-screen select-none">
+      <div className="flex items-center justify-center h-screen select-none">
         <Player src={src} onEnded={loadRandomWebm} publicPath={publicPath} />
       </div>
       <button
         type="button"
         onClick={loadRandomWebm}
-        class="absolute left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
+        className="absolute left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,4 @@
-import { isGif } from "../utils/path.ts";
+import { isGif } from "~/utils/path.ts";
 
 interface PlayerProps {
   src: string;
@@ -12,7 +12,7 @@ export default function Player({ src, onEnded, publicPath }: PlayerProps) {
   };
 
   if (isGif(src)) {
-    return <img class="max-h-screen" src={getFullUri(src)} />;
+    return <img className="max-h-screen" src={getFullUri(src)} />;
   }
 
   return (
@@ -21,7 +21,7 @@ export default function Player({ src, onEnded, publicPath }: PlayerProps) {
       src={getFullUri(src)}
       autoPlay
       onEnded={onEnded}
-      class="max-h-screen"
+      className="max-h-screen"
     >
     </video>
   );
