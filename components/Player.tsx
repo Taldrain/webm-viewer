@@ -3,7 +3,7 @@ import { isGif } from "~/utils/path.ts";
 interface PlayerProps {
   src: string;
   publicPath: string;
-  onEnded: () => void;
+  onEnded: (e: Event) => Promise<void>;
 }
 
 export default function Player({ src, onEnded, publicPath }: PlayerProps) {

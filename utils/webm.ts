@@ -5,6 +5,17 @@ const webms = Array.from(
   (i: Deno.DirEntry) => i.name,
 );
 
+export function getRandomizeWebms(): string[] {
+  const array = [...webms];
+
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+}
+
 export function getRandomWebm(): string {
   return webms[Math.floor(Math.random() * webms.length)];
 }

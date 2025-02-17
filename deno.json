@@ -5,6 +5,7 @@
     "build": "deno run -A --env-file dev.ts build"
   },
   "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
+  "nodeModulesDir": "auto",
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "$std/": "https://deno.land/std@0.216.0/",
