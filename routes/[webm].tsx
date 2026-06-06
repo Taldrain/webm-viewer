@@ -1,4 +1,5 @@
-import { Handlers } from "$fresh/server.ts";
+import { HttpError } from "fresh";
+import { define } from "~/utils/define.ts";
 
 import { getExtension, isValidWebm } from "~/utils/path.ts";
 import { loadWebm } from "~/utils/webm.ts";
@@ -15,10 +16,10 @@ function getContentType(extension: string) {
   return "image/gif";
 }
 
-export const handler: Handlers = {
-  async GET(_, ctx) {
+export const handler = define.handlers({
+  async GET(ctx) {
     if (!isValidWebm(ctx.params.webm)) {
-      return new Response("", { status: 404 });
+      throw new HttpError(404);
     }
     const extension = getExtension(ctx.params.webm);
     const data = await loadWebm(ctx.params.webm);
@@ -28,4 +29,4 @@ export const handler: Handlers = {
       },
     });
   },
-};
+});

@@ -1,0 +1,5 @@
+@import "tailwindcss";
+
+@source "../routes";
+@source "../islands";
+@source "../components";
