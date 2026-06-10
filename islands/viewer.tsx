@@ -6,14 +6,16 @@ type ViewerIslandProps = {
   initWebm: string;
 };
 
-export default function ViewerIsland({ publicPath, initWebm }: ViewerIslandProps) {
+export default function ViewerIsland(
+  { publicPath, initWebm }: ViewerIslandProps,
+) {
   const [src, setSrc] = useState(initWebm);
 
   const handleNewWebm = async () => {
     const res = await fetch(`${publicPath}viewer`, { method: "POST" });
     const { src } = await res.json();
     setSrc(src);
-  }
+  };
 
   return (
     <>
