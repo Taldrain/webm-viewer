@@ -15,6 +15,10 @@ const MIN_TILES = 2;
 const MAX_TILES = 24;
 // Videos have no controls on this page, so keep unmuted playback quiet.
 const DEFAULT_VOLUME = 0.3;
+// Gifs loop forever and never fire "ended", so rotate them after a
+// randomized delay instead.
+const GIF_MIN_MS = 8_000;
+const GIF_MAX_MS = 20_000;
 
 // Recursively split a rect into n rects with randomized cut positions.
 // The cut orientation is biased by the rect's on-screen aspect ratio so
@@ -59,6 +63,18 @@ function buildLayout(width: number, height: number): Rect[] {
   const rects: Rect[] = [];
   splitRect({ x: 0, y: 0, w: 100, h: 100 }, count, width / height, rects);
   return rects;
+}
+
+function GifTile({ src, onDone }: { src: string; onDone: () => void }) {
+  useEffect(() => {
+    const timer = setTimeout(
+      onDone,
+      GIF_MIN_MS + Math.random() * (GIF_MAX_MS - GIF_MIN_MS),
+    );
+    return () => clearTimeout(timer);
+  }, []);
+
+  return <img className="h-full w-full object-cover" src={src} />;
 }
 
 export default function WallIsland({ publicPath, initWebms }: WallIslandProps) {
@@ -164,9 +180,9 @@ export default function WallIsland({ publicPath, initWebms }: WallIslandProps) {
           >
             {isGif(tile.src)
               ? (
-                <img
-                  className="h-full w-full object-cover"
+                <GifTile
                   src={`${publicPath}${tile.src}`}
+                  onDone={() => replaceTile(tile.id)}
                 />
               )
               : (
