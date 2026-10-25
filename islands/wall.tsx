@@ -382,7 +382,7 @@ export default function WallIsland({ publicPath, initWebms }: WallIslandProps) {
       <button
         type="button"
         onClick={shuffle}
-        className="fixed left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm cursor-pointer focus:outline-none opacity-40 hover:opacity-100"
+        className="fixed left-4 bottom-4 rounded-full bg-[#FF6A3D] p-2 text-white shadow-sm cursor-pointer focus:outline-none opacity-40 hover:opacity-100"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
