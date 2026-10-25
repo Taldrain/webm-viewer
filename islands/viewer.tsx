@@ -29,7 +29,7 @@ export default function ViewerIsland(
       <button
         type="button"
         onClick={handleNewWebm}
-        className="absolute left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm focus:outline-none"
+        className="absolute left-4 bottom-4 rounded-full bg-gray-600 p-2 text-white shadow-sm cursor-pointer focus:outline-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
