@@ -31,9 +31,13 @@ type Change = "swap" | "add" | "remove" | "move";
 
 const FULL: Rect = { x: 0, y: 0, w: 100, h: 100 };
 const TARGET_TILE_AREA = 480 * 360;
+// On screens with a shorter side than this (phones), tiles shrink along
+// with the screen so it still gets a wall rather than a couple of tiles.
+const FULL_TILE_SHORT_SIDE = 720;
 const MIN_TILES = 2;
 const MAX_TILES = 24;
-// A change may not shrink a tile below this many pixels on either side.
+// A change may not shrink a tile below this many pixels on either side,
+// scaled down on small screens like the tiles themselves.
 const MIN_TILE_PX = 160;
 // How often a tile ending rearranges the wall instead of a plain swap.
 const REARRANGE_CHANCE = 1 / 3;
@@ -46,10 +50,16 @@ const DEFAULT_VOLUME = 0.3;
 const GIF_MIN_MS = 8_000;
 const GIF_MAX_MS = 20_000;
 
+// How much tiles shrink on this screen: 1 unless it is a small one.
+function tileScale(width: number, height: number): number {
+  return Math.min(1, Math.min(width, height) / FULL_TILE_SHORT_SIDE);
+}
+
 function targetCount(width: number, height: number): number {
+  const area = TARGET_TILE_AREA * tileScale(width, height) ** 2;
   return Math.max(
     MIN_TILES,
-    Math.min(MAX_TILES, Math.round((width * height) / TARGET_TILE_AREA)),
+    Math.min(MAX_TILES, Math.round((width * height) / area)),
   );
 }
 
@@ -204,12 +214,10 @@ function applyChange(
 // A change may not shrink a tile below MIN_TILE_PX, nor create one that
 // small. Tiles already under it (e.g. after a resize) may stay as they are.
 function fits(next: Tile[], prev: Tile[], width: number, height: number) {
+  const min = MIN_TILE_PX * tileScale(width, height);
   const before = new Map(prev.map((tile) => [tile.id, tile.rect]));
   return next.every(({ id, rect }) => {
-    if (
-      (rect.w * width) / 100 >= MIN_TILE_PX &&
-      (rect.h * height) / 100 >= MIN_TILE_PX
-    ) {
+    if ((rect.w * width) / 100 >= min && (rect.h * height) / 100 >= min) {
       return true;
     }
     const old = before.get(id);
